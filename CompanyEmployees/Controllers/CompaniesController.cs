@@ -9,13 +9,14 @@ using Contracts;
 using Entities.DataTransfertObjects;
 using Entities.Models;
 using Marvin.Cache.Headers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyEmployees.Controllers
 {
     [Route("api/companies")]
     [ApiController]
-    [ResponseCache(CacheProfileName = "120SecondsDuration")]
+    //[ResponseCache(CacheProfileName = "120SecondsDuration")]
     public class CompaniesController : ControllerBase
     {
         private readonly IRepositoryManager _repository;
@@ -30,7 +31,7 @@ namespace CompanyEmployees.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet(Name = "GetCompagnies"), Authorize(Roles = "Manager")]
         public async Task<IActionResult> GetCompanies()
         {
             
