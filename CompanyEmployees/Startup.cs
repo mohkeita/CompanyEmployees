@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreRateLimit;
 using AutoMapper;
 using CompanyEmployees.ActionFilters;
 using CompanyEmployees.Extensions;
@@ -52,6 +53,11 @@ namespace CompanyEmployees
             services.ConfigureResponseCaching();
             services.ConfigureHttpCacheHeaders();
             
+            services.AddMemoryCache();
+            
+            services.ConfigureRateLimitingOptions();
+            services.AddHttpContextAccessor();
+            
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
@@ -92,6 +98,8 @@ namespace CompanyEmployees
 
             app.UseResponseCaching();
             app.UseHttpCacheHeaders();
+
+            app.UseIpRateLimiting();
 
             app.UseRouting();
 
