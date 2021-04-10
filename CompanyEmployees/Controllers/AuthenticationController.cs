@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CompanyEmployees.Controllers
 {
     [Route("api/authentication")]
+    [ApiExplorerSettings(GroupName = "v1")]
     public class AuthenticationController : ControllerBase
     {
         private readonly ILoggerManager _logger;

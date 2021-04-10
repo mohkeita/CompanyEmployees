@@ -16,7 +16,8 @@ namespace CompanyEmployees.Controllers
 {
     [Route("api/companies")]
     [ApiController]
-    //[ResponseCache(CacheProfileName = "120SecondsDuration")]
+    [ResponseCache(CacheProfileName = "120SecondsDuration")]
+    [ApiExplorerSettings(GroupName = "v1")]
     public class CompaniesController : ControllerBase
     {
         private readonly IRepositoryManager _repository;
@@ -31,6 +32,7 @@ namespace CompanyEmployees.Controllers
             _mapper = mapper;
         }
 
+        
         [HttpGet(Name = "GetCompagnies"), Authorize(Roles = "Manager")]
         public async Task<IActionResult> GetCompanies()
         {
@@ -61,7 +63,7 @@ namespace CompanyEmployees.Controllers
             }
             
         }
-
+        
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateCompany([FromBody]CompanyForCreationDto company)
